@@ -29,19 +29,29 @@ const toggleMenu = () => {
 
 menuToggleIcon.addEventListener('click', toggleMenu);
 // Open/Close search form popup
+const formOpenBtn = selectElement('#search-icon');
+const searchFormContainer = selectElement('#search-form-container');
+const formCloseBtn = selectElement('#form-close-btn');
 
+formOpenBtn.addEventListener('click', () =>
+  searchFormContainer.classList.add('activated')
+);
+formCloseBtn.addEventListener('click', () =>
+  searchFormContainer.classList.remove('activated')
+);
 // -- Close the search form popup on ESC keypress
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') searchFormContainer.classList.remove('activated');
+});
 
 // Switch theme/add to local storage
-
-const bodyElement = document.body;
 const themeToggleBtn = selectElement('#theme-toggle-btn');
+const bodyElement = document.body;
 const currentTheme = localStorage.getItem('currentTheme');
 if (currentTheme) {
   bodyElement.classList.add('light-theme');
 }
-
-themeToggleBtn.addEventListener('click', () => {
+const toggleTheme = () => {
   bodyElement.classList.toggle('light-theme');
 
   if (bodyElement.classList.contains('light-theme')) {
@@ -49,5 +59,7 @@ themeToggleBtn.addEventListener('click', () => {
   } else {
     localStorage.removeItem('currentTheme');
   }
-});
+};
+
+themeToggleBtn.addEventListener('click', toggleTheme);
 // Swiper
